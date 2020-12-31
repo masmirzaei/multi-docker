@@ -1,0 +1,25 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t test-react -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run test-react npm test -- --coverage
+
+
+after_success:
+  - docker build -t surenamas/multi-client ./client
+  - docker build -t surenamas/multi-nginx ./nginx
+  - docker build -t surenamas/multi-server ./server
+  - docker build -t surenamas/multi-worker ./worker
+#Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+#Take those Images and push them to docker hub
+  - docker push surenamas/multi-client
+  - docker push surenamas/multi-nginx
+  - docker push surenamas/multi-server
+  - docker push surenamas/multi-worker
+
+
