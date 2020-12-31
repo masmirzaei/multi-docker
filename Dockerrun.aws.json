@@ -1,0 +1,33 @@
+{
+	"AWSEBDockerrunVersion": 2,
+	"contanerDefinaitions": [{
+			"name": "client",
+			"image": "surenamas/multi-client",
+			" hostname": "client",
+			" essential": false
+		},
+		{
+			"name": "server",
+			"image": "surenamas/multi-server",
+			"hostname": "api",
+			"essential": false
+		},
+		{
+			"name": "worker",
+			"image": "surenamas/multi-worker",
+			"hostname": "worker",
+			"essential": false
+		},
+		{
+			"name": "nginx",
+			"image": "surenamas/multi-nginx",
+			"hostname": "nginx",
+			"essential": true,
+			"portMappings": [{
+				"hostPort": 80,
+				"containerPort": 80
+			}],
+			"links": ["client", "server"]
+		}
+	]
+}
