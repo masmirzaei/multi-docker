@@ -1,4 +1,4 @@
-language: nodejs
+language: node_js
 sudo: required
 services:
   - docker
@@ -30,6 +30,7 @@ deploy:
   env: MultiDocker-env
   bucket_name: elasticbeanstalk-us-east-2-738215445482
   bucket_path: docker-multi
+  edge: true
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
